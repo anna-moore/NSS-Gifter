@@ -138,9 +138,9 @@ namespace Gifter.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                          SELECT Title, Caption, DateCreated, ImageUrl, UserProfileId
-                            FROM Post
-                           WHERE Id = @Id";
+                          SELECT p.Title as PostTitle, p.Caption as PostCaption, p.DateCreated as PostDate, p.ImageUrl as PostImage, p.UserProfileId as PostUsProfId, u.Name as UserName, u.Email as UserEmail, u.ImageUrl as UserImage, u.DateCreated as UserDate
+                            FROM Post p JOIN UserProfile u on p.UserProfileId = u.Id
+                           WHERE p.Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
 
@@ -152,11 +152,20 @@ namespace Gifter.Repositories
                         post = new Post()
                         {
                             Id = id,
-                            Title = DbUtils.GetString(reader, "Title"),
-                            Caption = DbUtils.GetString(reader, "Caption"),
-                            DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
-                            ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
-                            UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
+                            Title = DbUtils.GetString(reader, "PostTitle"),
+                            Caption = DbUtils.GetString(reader, "PostCaption"),
+                            DateCreated = DbUtils.GetDateTime(reader, "PostDate"),
+                            ImageUrl = DbUtils.GetString(reader, "PostImage"),
+                            UserProfileId = DbUtils.GetInt(reader, "PostUsProfId"),
+                            UserProfile = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "PostUsProfId"),
+                                Name = DbUtils.GetString(reader, "UserName"),
+                                Email = DbUtils.GetString(reader, "UserEmail"),
+                                ImageUrl = DbUtils.GetString(reader, "UserImage"),
+                                DateCreated = DbUtils.GetDateTime(reader, "UserDate")
+
+                            }
                         };
                     }
 
