@@ -13,7 +13,7 @@ namespace Gifter.Controllers
     [ApiController]
     public class UserProfileController : ControllerBase
     {
-        private readonly IUserProfileRepository userProfileRepository;
+        private readonly IUserProfileRepository _userProfileRepository;
         public UserProfileController(IUserProfileRepository userProfileRepository)
         {
             _userProfileRepository = userProfileRepository;
