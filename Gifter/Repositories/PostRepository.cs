@@ -266,13 +266,13 @@ namespace Gifter.Repositories
                 using(var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"SELECT p.Id AS PostId, p.Title, p.Caption, p.DateCreated AS PostDateCreated, 
-                                    p.ImageUrl AS PostImageUrl, p.UserProfileId,
+                                               p.ImageUrl AS PostImageUrl, p.UserProfileId,
 
-                                    up.Name, up.Bio, up.Email, up.DateCreated AS UserProfileDateCreated, 
-                                    up.ImageUrl AS UserProfileImageUrl
-                                FROM Post p 
-                                    LEFT JOIN UserProfile up ON p.UserProfileId = up.id
-                                WHERE p.DateCreated >= @Criterion";
+                                               up.Name, up.Bio, up.Email, up.DateCreated AS UserProfileDateCreated, 
+                                               up.ImageUrl AS UserProfileImageUrl
+                                        FROM Post p 
+                                            LEFT JOIN UserProfile up ON p.UserProfileId = up.id
+                                        WHERE p.DateCreated >= @Criterion";
 
                     DbUtils.AddParameter(cmd, "@Since", since);
                     var reader = cmd.ExecuteReader();
