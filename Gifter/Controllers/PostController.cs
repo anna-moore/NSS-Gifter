@@ -76,9 +76,9 @@ namespace Gifter.Controllers
         }
 
         [HttpGet("searchForHottest")]
-        public IActionResult Search(DateTime dateTime)
+        public IActionResult Search(DateTime since)
         {
-            return Ok(_postRepository.SearchforHottest(dateTime));
+            return Ok(_postRepository.SearchforHottest(since));
         }
     }
 }
